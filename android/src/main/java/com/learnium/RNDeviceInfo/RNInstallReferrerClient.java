@@ -2,7 +2,6 @@ package com.learnium.RNDeviceInfo;
 
 import android.content.SharedPreferences;
 import android.content.Context;
-import android.os.RemoteException;
 import android.util.Log;
 
 import com.android.installreferrer.api.InstallReferrerClient;
@@ -10,6 +9,7 @@ import com.android.installreferrer.api.InstallReferrerStateListener;
 import com.android.installreferrer.api.ReferrerDetails;
 
 public class RNInstallReferrerClient {
+  private static final boolean DEBUG = false;
 
   private SharedPreferences sharedPreferences;
   private InstallReferrerClient mReferrerClient;
@@ -45,7 +45,7 @@ public class RNInstallReferrerClient {
           case InstallReferrerClient.InstallReferrerResponse.OK:
             // Connection established
             try {
-              if (BuildConfig.DEBUG) Log.d("InstallReferrerState", "OK");
+              if (DEBUG) Log.d("InstallReferrerState", "OK");
               ReferrerDetails response = mReferrerClient.getInstallReferrer();
               response.getInstallReferrer();
               response.getReferrerClickTimestampSeconds();
@@ -62,11 +62,11 @@ public class RNInstallReferrerClient {
             }
             break;
           case InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED:
-            if (BuildConfig.DEBUG) Log.d("InstallReferrerState", "FEATURE_NOT_SUPPORTED");
+            if (DEBUG) Log.d("InstallReferrerState", "FEATURE_NOT_SUPPORTED");
             // API not available on the current Play Store app
             break;
           case InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE:
-            if (BuildConfig.DEBUG) Log.d("InstallReferrerState", "SERVICE_UNAVAILABLE");
+            if (DEBUG) Log.d("InstallReferrerState", "SERVICE_UNAVAILABLE");
             // Connection could not be established
             break;
         }
@@ -75,7 +75,7 @@ public class RNInstallReferrerClient {
       @Override public void onInstallReferrerServiceDisconnected() {
         // Documentation indicates the InstallReferrer connection will be maintained
         // So there is really nothing to do here
-        if (BuildConfig.DEBUG) Log.d("RNInstallReferrerClient", "InstallReferrerService disconnected");
+        if (DEBUG) Log.d("RNInstallReferrerClient", "InstallReferrerService disconnected");
       }
     };
 }
